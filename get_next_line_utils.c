@@ -6,7 +6,7 @@
 /*   By: francisco <francisco@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 09:52:41 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/04/25 16:50:57 by francisco        ###   ########.fr       */
+/*   Updated: 2023/04/25 20:10:33 by francisco        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	ft_strlcpy(new_str, s1, len_str1 + 1);
 	ft_strlcpy(new_str + len_str1, s2, len_str2 + 1);
-	//free(s1);
 	return (new_str);
 }
 

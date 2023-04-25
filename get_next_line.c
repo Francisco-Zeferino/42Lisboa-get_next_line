@@ -6,16 +6,15 @@
 /*   By: francisco <francisco@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:04:58 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/04/25 17:00:32 by francisco        ###   ########.fr       */
+/*   Updated: 2023/04/25 21:07:01 by francisco        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_line(int fd)
+char	*get_line(int fd, char *line)
 {
 	char		*str;
-	static char	*line;
 	int			bytes;
 
 	str = (char *)malloc(BUFFER_SIZE + 1);
@@ -35,8 +34,6 @@ char	*get_line(int fd)
 		if (bytes == -1)
 		{
 			free(str);
-			free(line);
-			line = NULL;
 			return (0);
 		}
 		str[bytes] = '\0';
@@ -48,29 +45,29 @@ char	*get_line(int fd)
 
 char	*next_line(char *line)
 {
+	int		i;
 	char	*str;
-	char	*file_next_line;
-	int		str_len;
 
-	if (ft_strchr(line, '\n'))
+	i = 0;
+	if (!line[i])
+		return (NULL);
+	while (line[i] && line[i] != '\n')
+		i++;
+	str = (char *)malloc(i + 2);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (line[i] && line[i] != '\n')
 	{
-		file_next_line = ft_strchr(line, '\n');
-		str_len = ft_strlen(file_next_line);
-		str = (char *)malloc(str_len + 1);
-		if (str == NULL)
-			return (0);
-		str[str_len] = '\0';
-		ft_strlcpy(str, file_next_line, str_len);
+		str[i] = line[i];
+		i++;
 	}
-	else
+	if (line[i] == '\n')
 	{
-		str_len = ft_strlen(line) - 1;
-		str = (char *)malloc(str_len + 1);
-		if (str == NULL)
-			return (0);
-		ft_strlcpy(str, line, str_len);
-		str[str_len] = '\0';
+		str[i] = line[i];
+		i++;
 	}
+	str[i] = '\0';
 	return (str);
 }
 
@@ -107,12 +104,12 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = get_line(fd);
+	line = get_line(fd, line);
 	if (!line)
 		return (NULL);
 	s_next_line = next_line(line);
 	line = new_line(line);
-	return (line);
+	return (s_next_line);
 }
 
 int	main(void)
