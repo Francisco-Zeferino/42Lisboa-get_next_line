@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: francisco <francisco@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/25 15:31:36 by francisco         #+#    #+#             */
+/*   Updated: 2023/04/25 15:31:38 by francisco        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE
 # define GET_NEXT_LINE
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 128
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 128
+# endif
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
