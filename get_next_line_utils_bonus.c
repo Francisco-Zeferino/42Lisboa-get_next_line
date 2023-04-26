@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/21 09:52:41 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/04/26 13:12:49 by ffilipe-         ###   ########.fr       */
+/*   Created: 2023/04/26 16:03:04 by ffilipe-          #+#    #+#             */
+/*   Updated: 2023/04/26 16:12:04 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
-// char	get_file_line(int fd, char *line)
-// {
-// 	char	*store_text;
-// 	size_t	bytes;
-
-// 	store_text = (char *)malloc(BUFFER + 1);
-// 	if (store_text == NULL)
-// 		return (0);
-// 	bytes = 1;
-// 	while (!ft_strchr(line, '\n'))
-// 	{
-// 		bytes = read(fd, store_text, BUFFER);
-// 		if (fd == -1)
-// 		{
-// 			free(store_text);
-// 			return (NULL);
-// 		}
-// 		store_text[bytes] = '\0';
-// 		line = ft_strjoin(line, store_text);
-// 	}
-// 	free(store_text);
-// 	return (line);
-// }
+#include "get_next_line_bonus.h"
 
 char	*ft_strchr(const char *str, int c)
 {

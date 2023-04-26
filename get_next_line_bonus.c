@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 12:04:58 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/04/26 16:36:40 by ffilipe-         ###   ########.fr       */
+/*   Created: 2023/04/26 16:00:17 by ffilipe-          #+#    #+#             */
+/*   Updated: 2023/04/26 16:21:22 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*get_line(int fd, char *line)
 {
@@ -34,8 +34,6 @@ static char	*get_line(int fd, char *line)
 		if (bytes == -1)
 		{
 			free(str);
-			free(line);
-			line = NULL;
 			return (0);
 		}
 		str[bytes] = '\0';
@@ -76,28 +74,14 @@ static char	*next_line(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line[OPEN_MAX];
 	char		*s_next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = get_line(fd, line);
-	if (!line)
+	line[fd] = get_line(fd, line[fd]);
+	if (!line[fd])
 		return (NULL);
-	s_next_line = next_line(line);
+	s_next_line = next_line(line[fd]);
 	return (s_next_line);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
-
-// 	fd = open("file.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)))
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	close(fd);
-// }
