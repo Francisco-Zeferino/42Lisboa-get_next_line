@@ -6,35 +6,11 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 09:52:41 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/04/26 13:12:49 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/04/27 09:43:55 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-// char	get_file_line(int fd, char *line)
-// {
-// 	char	*store_text;
-// 	size_t	bytes;
-
-// 	store_text = (char *)malloc(BUFFER + 1);
-// 	if (store_text == NULL)
-// 		return (0);
-// 	bytes = 1;
-// 	while (!ft_strchr(line, '\n'))
-// 	{
-// 		bytes = read(fd, store_text, BUFFER);
-// 		if (fd == -1)
-// 		{
-// 			free(store_text);
-// 			return (NULL);
-// 		}
-// 		store_text[bytes] = '\0';
-// 		line = ft_strjoin(line, store_text);
-// 	}
-// 	free(store_text);
-// 	return (line);
-// }
 
 char	*ft_strchr(const char *str, int c)
 {

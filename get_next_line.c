@@ -6,11 +6,33 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 12:04:58 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/04/26 16:36:40 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:13:05 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*check_empty_ln(char *line)
+{
+	if (!line)
+	{
+		line = malloc(1);
+		if (!line)
+			return (NULL);
+		*line = '\0';
+	}
+	return (line);
+}
+
+char	*check_error(char *line, int bytes)
+{
+	if (bytes == 0 && ft_strlen(line) == 0)
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
+}
 
 static char	*get_line(int fd, char *line)
 {
@@ -21,13 +43,7 @@ static char	*get_line(int fd, char *line)
 	if (str == NULL)
 		return (0);
 	bytes = 1;
-	if (!line)
-	{
-		line = malloc(1);
-		if (!line)
-			return (NULL);
-		*line = '\0';
-	}
+	line = check_empty_ln(line);
 	while (!ft_strchr(line, '\n') && bytes > 0)
 	{
 		bytes = read(fd, str, BUFFER_SIZE);
@@ -42,11 +58,7 @@ static char	*get_line(int fd, char *line)
 		line = ft_strjoin(line, str);
 	}
 	free(str);
-	if (bytes == 0 && ft_strlen(line) == 0)
-	{
-		free(line);
-		return (NULL);
-	}
+	line = check_error(line, bytes);
 	return (line);
 }
 
@@ -88,16 +100,16 @@ char	*get_next_line(int fd)
 	return (s_next_line);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
+int	main(void)
+{
+	int		fd;
+	char	*line;
 
-// 	fd = open("file.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)))
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	close(fd);
-// }
+	fd = open("file.txt", O_RDONLY);
+	while ((line = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+}

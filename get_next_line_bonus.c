@@ -6,11 +6,33 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:00:17 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/04/26 16:21:22 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/04/27 11:22:41 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+char	*check_empty_ln(char *line)
+{
+	if (!line)
+	{
+		line = malloc(1);
+		if (!line)
+			return (NULL);
+		*line = '\0';
+	}
+	return (line);
+}
+
+char	*check_error(char *line, int bytes)
+{
+	if (bytes == 0 && ft_strlen(line) == 0)
+	{
+		free(line);
+		return (NULL);
+	}
+	return (line);
+}
 
 static char	*get_line(int fd, char *line)
 {
@@ -21,30 +43,22 @@ static char	*get_line(int fd, char *line)
 	if (str == NULL)
 		return (0);
 	bytes = 1;
-	if (!line)
-	{
-		line = malloc(1);
-		if (!line)
-			return (NULL);
-		*line = '\0';
-	}
+	line = check_empty_ln(line);
 	while (!ft_strchr(line, '\n') && bytes > 0)
 	{
 		bytes = read(fd, str, BUFFER_SIZE);
 		if (bytes == -1)
 		{
 			free(str);
+			free(line);
+			line = NULL;
 			return (0);
 		}
 		str[bytes] = '\0';
 		line = ft_strjoin(line, str);
 	}
 	free(str);
-	if (bytes == 0 && ft_strlen(line) == 0)
-	{
-		free(line);
-		return (NULL);
-	}
+	line = check_error(line, bytes);
 	return (line);
 }
 
@@ -74,7 +88,7 @@ static char	*next_line(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char	*line[OPEN_MAX];
+	static char	*line[MAX_FD];
 	char		*s_next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -84,4 +98,21 @@ char	*get_next_line(int fd)
 		return (NULL);
 	s_next_line = next_line(line[fd]);
 	return (s_next_line);
+}
+
+int	main(void)
+{
+	int		fd;
+	int		fd2;
+	char	*line;
+
+	fd = open("file.txt", O_RDONLY);
+	fd2 = open("file2.txt", O_RDONLY);
+	fd = open("file.txt", O_RDONLY);
+	while ((line[MAX_FD] = get_next_line(fd)))
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
 }
