@@ -99,17 +99,3 @@ char	*get_next_line(int fd)
 	s_next_line = next_line(line);
 	return (s_next_line);
 }
-
-int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("file.txt", O_RDONLY);
-	while ((line = get_next_line(fd)))
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-}
